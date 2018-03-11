@@ -1,4 +1,4 @@
-# User Service
+# Client Service
 
 Spring Cloud Client Micro Service Example 
 
