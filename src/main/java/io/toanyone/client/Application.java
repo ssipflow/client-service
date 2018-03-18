@@ -4,6 +4,7 @@ import io.toanyone.client.domain.Client;
 import io.toanyone.client.repository.ClientRepository;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -20,12 +21,8 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-
-	@Autowired
-	private ClientRepository repository;
-
 	@Bean
-	InitializingBean sendDatabase() {
+	public CommandLineRunner demo(ClientRepository repository) {
 		Client client = new Client();
 
 		client.setSeq(1);
@@ -39,7 +36,7 @@ public class Application {
 		client.setAuthorities("ROLE_MOBILE_CLIENT");
 		client.setResourceIds("API");
 
-		return () -> {
+		return (args) -> {
 			repository.save(client);
 		};
 	}
