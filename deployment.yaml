@@ -1,4 +1,31 @@
 apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: client
+spec:
+  rules:
+  - host: client.k8s.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: client
+          servicePort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: client
+spec:
+  type: ClusterIP
+  selector:
+    app: client-micro-service
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: client-micro-service
