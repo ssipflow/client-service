@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: client-micro-service
+  labels:
+    app: client-micro-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-micro-service
+  template:
+    metadata:
+      labels:
+        app: client-micro-service
+        version: latest
+    spec:
+      hostname: client-service
+      subdomain: client-service
+      containers:
+      - name: client-service
+        image: hubtea/client-service:latest
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: dev
+        ports:
+        - name: http
+          containerPort: 8080
